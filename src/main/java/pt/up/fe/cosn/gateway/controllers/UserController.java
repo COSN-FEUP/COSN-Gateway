@@ -3,6 +3,7 @@ package pt.up.fe.cosn.gateway.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.up.fe.cosn.gateway.advices.responses.GenericResponse;
 import pt.up.fe.cosn.gateway.advices.responses.LoginResponse;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
 import pt.up.fe.cosn.gateway.advices.responses.UserFromTokenResponse;
@@ -23,10 +24,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/hello-world")
+    @GetMapping("/")
     @ResponseBody
-    public ResponseEntity<Object> helloWorld() {
-        return ResponseFactory.ok(new LoginResponse(true, "Hello World!!!", "test"));
+    public ResponseEntity<Object> getHome() {
+        return ResponseFactory.ok(new GenericResponse(true, "Home"));
+    }
+
+    @GetMapping("/getTest")
+    @ResponseBody
+    public ResponseEntity<Object> getTest() {
+        return ResponseFactory.ok(new GenericResponse(true, "Get Test Endpoint"));
     }
 
     @PostMapping ("/login")
