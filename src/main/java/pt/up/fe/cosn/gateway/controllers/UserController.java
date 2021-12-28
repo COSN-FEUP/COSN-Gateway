@@ -15,6 +15,8 @@ import pt.up.fe.cosn.gateway.requests.UserLoginRequest;
 import pt.up.fe.cosn.gateway.requests.UserRegisterRequest;
 import pt.up.fe.cosn.gateway.services.UserService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -26,10 +28,10 @@ public class UserController {
 
     @GetMapping("/")
     @ResponseBody
-    public ResponseEntity<Object> getHome() {
-        return ResponseFactory.ok(new GenericResponse(true, "Home"));
+    public void getHome(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/swagger-ui.html");
     }
-
+S
     @GetMapping("/getTest")
     @ResponseBody
     public ResponseEntity<Object> getTest() {
