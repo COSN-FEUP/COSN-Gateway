@@ -31,7 +31,7 @@ public class UserController {
     public void getHome(HttpServletResponse response) throws IOException {
         response.sendRedirect("/swagger-ui.html");
     }
-S
+
     @GetMapping("/getTest")
     @ResponseBody
     public ResponseEntity<Object> getTest() {
