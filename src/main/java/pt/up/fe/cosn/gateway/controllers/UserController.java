@@ -1,5 +1,6 @@
 package pt.up.fe.cosn.gateway.controllers;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Hidden
     @GetMapping("/")
     @ResponseBody
     public void getHome(HttpServletResponse response) throws IOException {
