@@ -34,12 +34,6 @@ public class UserController {
         response.sendRedirect("/swagger-ui.html");
     }
 
-    @GetMapping("/getTest")
-    @ResponseBody
-    public ResponseEntity<Object> getTest() {
-        return ResponseFactory.ok(new GenericResponse(true, "Get Test Endpoint"));
-    }
-
     @PostMapping ("/login")
     public ResponseEntity<Object> loginUser(@RequestBody UserLoginRequest request) {
         if(request == null || request.getEmail() == null || request.getPassword() == null)
