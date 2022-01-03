@@ -8,24 +8,28 @@ import pt.up.fe.cosn.gateway.advices.responses.GenericResponse;
 import pt.up.fe.cosn.gateway.advices.responses.LoginResponse;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
 import pt.up.fe.cosn.gateway.advices.responses.UserFromTokenResponse;
+import pt.up.fe.cosn.gateway.entities.Role;
 import pt.up.fe.cosn.gateway.entities.User;
-import pt.up.fe.cosn.gateway.exceptions.UserNotFoundException;
+import pt.up.fe.cosn.gateway.advices.exceptions.UserNotFoundException;
 import pt.up.fe.cosn.gateway.factories.ResponseFactory;
 import pt.up.fe.cosn.gateway.requests.UserFromTokenRequest;
 import pt.up.fe.cosn.gateway.requests.UserLoginRequest;
 import pt.up.fe.cosn.gateway.requests.UserRegisterRequest;
+import pt.up.fe.cosn.gateway.services.RoleService;
 import pt.up.fe.cosn.gateway.services.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Hidden
     @GetMapping("/")
@@ -56,10 +60,15 @@ public class UserController {
 
     @PostMapping ("/register")
     public ResponseEntity<Object> registerUser(@RequestBody UserRegisterRequest request) {
-        if(request == null || request.getEmail() == null || request.getPassword() == null)
+        if(request == null || request.getEmail() == null || request.getPassword() == null || request.getRoleId() == null)
             return ResponseFactory.bad(new SimpleResponse(false, "Required fields are empty."));
 
-        Boolean result = userService.registerUser(new User(request.getEmail(), request.getPassword(), false));
+        Optional<Role> roleOptional = roleService.getRoleById(request.getRoleId());
+
+        if(roleOptional.isEmpty())
+            return ResponseFactory.bad(new SimpleResponse(false, "Role does not exist."));
+
+        Boolean result = userService.registerUser(new User(request.getEmail(), request.getPassword(), roleOptional.get(), false));
 
         if(!result){
             return ResponseFactory.expectationFailed(new SimpleResponse(false, "An unexpected error has occurred"));

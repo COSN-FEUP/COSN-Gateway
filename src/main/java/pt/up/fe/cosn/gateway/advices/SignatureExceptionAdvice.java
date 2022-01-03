@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
-import pt.up.fe.cosn.gateway.exceptions.UserNotFoundException;
 
 @ControllerAdvice
 class SignatureExceptionAdvice {
 
     @ResponseBody
     @ExceptionHandler(SignatureException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public SimpleResponse employeeNotFoundHandler(SignatureException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public SimpleResponse signatureException(SignatureException ex) {
       return new SimpleResponse(false, ex.getMessage());
     }
 }
