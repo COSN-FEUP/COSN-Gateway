@@ -28,7 +28,7 @@ public class RealSystemController {
 
     @GetMapping("/getSensorValues")
     @ResponseBody
-    public ResponseEntity<Object> getSensorValues(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<Object> getSensorValues(@RequestHeader("AuthToken") String authorization) {
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 

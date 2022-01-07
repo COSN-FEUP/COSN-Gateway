@@ -14,7 +14,7 @@ paths:
         - Visualization Service
       operationId: runVisualization
       parameters:
-        - name: Authorization
+        - name: AuthToken
           in: header
           required: true
           schema:
@@ -27,15 +27,29 @@ paths:
         required: true
       responses:
         "400":
-          description: The token is not valid.
-        "401":
-          description: User is not authorized to do this operation.
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
         "200":
           description: OK
           content:
-            'SimpleResponse':
+            '*/*':
               schema:
-                $ref: '#/components/schemas/SimpleResponse'
+                type: object
   /register:
     post:
       tags:
@@ -163,22 +177,36 @@ paths:
         required: true
       responses:
         "400":
-          description: The token is not valid.
-        "401":
-          description: User is not authorized to do this operation.
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
         "200":
           description: OK
           content:
-            'SimpleResponse':
+            '*/*':
               schema:
-                $ref: '#/components/schemas/SimpleResponse'
+                type: object
   /changeUserRole:
     post:
       tags:
         - Roles Managment
       operationId: changeUserRole
       parameters:
-        - name: Authorization
+        - name: AuthToken
           in: header
           required: true
           schema:
@@ -287,88 +315,144 @@ paths:
         - Real System Service
       operationId: getSensorValues
       parameters:
-        - name: Authorization
+        - name: AuthToken
           in: header
           required: true
           schema:
             type: string
       responses:
         "400":
-          description: The token is not valid.
-        "401":
-          description: User is not authorized to do this operation.
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
         "200":
           description: OK
           content:
-            'SimpleResponse':
+            '*/*':
               schema:
-                $ref: '#/components/schemas/SimpleResponse'
+                type: object
   /getDomainModel:
     get:
       tags:
         - Domain Model Service
       operationId: getDomainModel
       parameters:
-        - name: Authorization
+        - name: AuthToken
           in: header
           required: true
           schema:
             type: string
       responses:
         "400":
-          description: The token is not valid.
-        "401":
-          description: User is not authorized to do this operation.
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
         "200":
           description: OK
           content:
-            'SimpleResponse':
+            '*/*':
               schema:
-                $ref: '#/components/schemas/SimpleResponse'
+                type: object
   /getAllOrders:
     get:
       tags:
         - MAS Service
       operationId: getAllOrders
       parameters:
-        - name: Authorization
+        - name: AuthToken
           in: header
           required: true
           schema:
             type: string
       responses:
         "400":
-          description: The token is not valid.
-        "401":
-          description: User is not authorized to do this operation.
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
         "200":
           description: OK
           content:
-            'SimpleResponse':
+            '*/*':
               schema:
-                $ref: '#/components/schemas/SimpleResponse'
+                type: object
   /getAlgorithms:
     get:
       tags:
         - Algorithms Service
       operationId: getAlgorithms
       parameters:
-        - name: Authorization
+        - name: AuthToken
           in: header
           required: true
           schema:
             type: string
       responses:
         "400":
-          description: The token is not valid.
-        "401":
-          description: User is not authorized to do this operation.
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
         "200":
           description: OK
           content:
-            'SimpleResponse':
+            '*/*':
               schema:
-                $ref: '#/components/schemas/SimpleResponse'
+                type: object
 components:
   schemas:
     SimpleResponse:

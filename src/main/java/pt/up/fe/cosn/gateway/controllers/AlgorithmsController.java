@@ -30,7 +30,7 @@ public class AlgorithmsController {
 
     @GetMapping("/getAlgorithms")
     @ResponseBody
-    public ResponseEntity<Object> getAlgorithms(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<Object> getAlgorithms(@RequestHeader("AuthToken") String authorization) {
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 

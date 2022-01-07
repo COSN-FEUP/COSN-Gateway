@@ -34,7 +34,7 @@ public class MASController {
     private final List<Order> orders = new ArrayList<>();
 
     @PostMapping("/executeOrder")
-    public ResponseEntity<Object> executeOrder(@RequestHeader("Authorization") String authorization, @RequestBody OrderRequest request) {
+    public ResponseEntity<Object> executeOrder(@RequestHeader("AuthToken") String authorization, @RequestBody OrderRequest request) {
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 
@@ -49,7 +49,7 @@ public class MASController {
 
     @GetMapping("/getAllOrders")
     @ResponseBody
-    public ResponseEntity<Object> getAllOrders(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<Object> getAllOrders(@RequestHeader("AuthToken") String authorization) {
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 

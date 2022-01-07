@@ -29,7 +29,7 @@ public class DomainModelController {
     private String mockDomainModel = "Domain Model";
     @GetMapping("/getDomainModel")
     @ResponseBody
-    public ResponseEntity<Object> getDomainModel(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<Object> getDomainModel(@RequestHeader("AuthToken") String authorization) {
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 

@@ -25,7 +25,7 @@ public class VisualizationController {
     private UserService userService;
 
     @PostMapping("/runVisualization")
-    public ResponseEntity<Object> runVisualization(@RequestHeader("Authorization") String authorization, @RequestBody VisualizationRequest request) {
+    public ResponseEntity<Object> runVisualization(@RequestHeader("AuthToken") String authorization, @RequestBody VisualizationRequest request) {
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 
