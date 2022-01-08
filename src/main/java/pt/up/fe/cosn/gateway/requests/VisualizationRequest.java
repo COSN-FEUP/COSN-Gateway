@@ -6,5 +6,5 @@ import lombok.Setter;
 public class VisualizationRequest {
     @Getter
     @Setter
-    private String tempRequest;
+    private int id;
 }

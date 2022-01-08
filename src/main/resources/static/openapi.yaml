@@ -465,8 +465,8 @@ components:
     VisualizationRequest:
       type: object
       properties:
-        tempRequest:
-          type: string
+        id:
+          type: number
     UserRegisterRequest:
       type: object
       properties:
