@@ -22,7 +22,6 @@ public class GatewayApplication {
 
     @Bean
     public RestTemplate restTemplate() {
-
         var factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(3000);
         factory.setReadTimeout(3000);

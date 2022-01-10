@@ -164,7 +164,7 @@ paths:
         - MAS Service
       operationId: executeOrder
       parameters:
-        - name: Authorization
+        - name: AuthToken
           in: header
           required: true
           schema:

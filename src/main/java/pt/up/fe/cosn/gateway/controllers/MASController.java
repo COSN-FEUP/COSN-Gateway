@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import pt.up.fe.cosn.gateway.advices.responses.ExecuteOrderResponse;
 import pt.up.fe.cosn.gateway.advices.responses.GenericResponse;
 import pt.up.fe.cosn.gateway.advices.responses.OrdersResponse;
@@ -16,10 +17,7 @@ import pt.up.fe.cosn.gateway.services.RoleService;
 import pt.up.fe.cosn.gateway.services.UserService;
 import pt.up.fe.cosn.gateway.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 public class MASController {
@@ -29,6 +27,9 @@ public class MASController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     private final String mockCity = "Porto";
     private final List<Order> orders = new ArrayList<>();
@@ -43,6 +44,16 @@ public class MASController {
 
         if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
             return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+
+        Map<String, Double> order = new HashMap<String, Double>();
+        order.put("latitude", request.getLatitude());
+        order.put("longitude", request.getLongitude());
+
+        String URI_VISUALIZATION = "https://61d8d203e6744d0017ba8cc5.mockapi.io/Orders";
+
+        String userStr = restTemplate.postForObject(URI_VISUALIZATION, order, String.class);
+
+        System.out.println(userStr);
 
         return ResponseFactory.ok(new ExecuteOrderResponse(new Order(request.getLatitude(), request.getLongitude(), mockCity)));
     }
