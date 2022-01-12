@@ -6,7 +6,6 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
-import pt.up.fe.cosn.gateway.advices.responses.VisualizationResponse;
 import pt.up.fe.cosn.gateway.entities.User;
 import pt.up.fe.cosn.gateway.factories.ResponseFactory;
 import pt.up.fe.cosn.gateway.requests.VisualizationRequest;
@@ -14,14 +13,7 @@ import pt.up.fe.cosn.gateway.services.RoleService;
 import pt.up.fe.cosn.gateway.services.UserService;
 import pt.up.fe.cosn.gateway.utils.Utils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -54,8 +46,8 @@ public class VisualizationController {
         Map<String, Integer> params = new HashMap<String, Integer>();
         params.put("id", request.getId());
 
-        String userStr = restTemplate.getForObject(URI_VISUALIZATION, String.class, params);
+        String result = restTemplate.getForObject(URI_VISUALIZATION, String.class, params);
 
-        return ResponseFactory.ok(userStr);
+        return ResponseFactory.ok(result);
     }
 }

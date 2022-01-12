@@ -51,9 +51,9 @@ public class MASController {
 
         String URI_VISUALIZATION = "https://61d8d203e6744d0017ba8cc5.mockapi.io/Orders";
 
-        String userStr = restTemplate.postForObject(URI_VISUALIZATION, order, String.class);
+        String result = restTemplate.postForObject(URI_VISUALIZATION, order, String.class);
 
-        System.out.println(userStr);
+        System.out.println(result);
 
         return ResponseFactory.ok(new ExecuteOrderResponse(new Order(request.getLatitude(), request.getLongitude(), mockCity)));
     }
