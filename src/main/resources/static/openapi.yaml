@@ -3,10 +3,10 @@ info:
   title: COSN API Gateway
   version: 1.0.0
 servers:
-  - url: http://localhost:8080
-    description: Generated server url
   - url: https://cosn-api-gateway.herokuapp.com
     description: Heroku server url
+  - url: http://localhost:8080
+    description: Localhost server url
 paths:
   /runVisualization:
     post:
