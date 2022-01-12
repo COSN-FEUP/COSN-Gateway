@@ -53,8 +53,6 @@ public class MASController {
 
         String result = restTemplate.postForObject(URI_VISUALIZATION, order, String.class);
 
-        System.out.println(result);
-
         return ResponseFactory.ok(new ExecuteOrderResponse(new Order(request.getLatitude(), request.getLongitude(), mockCity)));
     }
 
