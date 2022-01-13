@@ -5,6 +5,10 @@ info:
 servers:
   - url: https://cosn-api-gateway.herokuapp.com
     description: Heroku server url
+  - url: https://cosn-health-checking.herokuapp.com
+    description: Health check server url
+  - url: https://cosn-log-aggregation.herokuapp.com
+    description: Log Aggregation Service for the COSN system
   - url: http://localhost:8080
     description: Localhost server url
 paths:
@@ -453,8 +457,191 @@ paths:
             '*/*':
               schema:
                 type: object
+  /health:
+    get:
+      summary: Returns the status of the service
+      description: This endpoint returns status 200 to notify the Health Checking Service that it's working as intended.
+      responses:
+        '200':
+          description: The response if the service is working as intended.
+  /services:
+    get:
+      tags:
+        - service-controller
+      operationId: getService
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimpleResponse"
+    put:
+      tags:
+        - service-controller
+      operationId: updateService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/service"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimpleResponse"
+    delete:
+      tags:
+        - service-controller
+      operationId: deleteService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/service"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimpleResponse"
+  /registerService:
+    post:
+      tags:
+        - service-controller
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/service"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimpleResponse"
+  /logs:
+    get:
+      tags:
+        - service-log-controller
+      operationId: getLogs
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/serviceLog"
+    post:
+      tags:
+        - service-log-controller
+      operationId: addLogs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SimpleWrapper"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimpleResponse"
+    delete:
+      tags:
+        - service-log-controller
+      operationId: deleteLogs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/serviceLog"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimpleResponse"
+  /logsByService:
+    get:
+      tags:
+        - service-log-controller
+      operationId: getLogsByServiceID
+      parameters:
+        - name: simpleWrapper
+          in: query
+          required: true
+          schema:
+            "$ref": "#/components/schemas/SimpleWrapper"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimpleResponse"
+  /logsByServiceTimestamp:
+    get:
+      tags:
+        - service-log-controller
+      operationId: getLogsByServiceTimestamp
+      parameters:
+        - name: simpleWrapper
+          in: query
+          required: true
+          schema:
+            "$ref": "#/components/schemas/SimpleWrapper"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimpleResponse"
 components:
   schemas:
+    LogType:
+      type: string
+      enum:
+        - INFORMATION
+        - WARNING
+        - FATAL
+        - DEBUG
+        - OTHER
+    OperationType:
+      type: string
+      enum:
+        - CREATE
+        - UPDATE
+        - DELETE
+        - READ
+        - OTHER
+    Log:
+      type: object
+      required:
+        - logType
+        - operationType
+      properties:
+        logType:
+          $ref: '#/components/schemas/LogType'
+        operationType:
+          $ref: '#/components/schemas/OperationType'
+        message:
+          type: string
     SimpleResponse:
       type: object
       properties:
@@ -506,3 +693,44 @@ components:
         roleId:
           type: integer
           format: int64
+    service:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        ip:
+          type: string
+        port:
+          type: string
+        logs:
+          type: array
+          items:
+            "$ref": "#/components/schemas/serviceLog"
+    serviceLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          format: int32
+    SimpleWrapper:
+      type: object
+      properties:
+        initialTimestamp:
+          type: string
+          format: date-time
+        endTimestamp:
+          type: string
+          format: date-time
+        ser:
+          "$ref": "#/components/schemas/service"
+        serLog:
+          "$ref": "#/components/schemas/serviceLog"
