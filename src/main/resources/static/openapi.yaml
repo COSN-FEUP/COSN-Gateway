@@ -530,8 +530,6 @@ paths:
                 "$ref": "#/components/schemas/SimpleResponse"
   /logs:
     get:
-      tags:
-        - service-log-controller
       summary: Returns a list of logs.
       description: Returns the logs from the Log Aggregation Service
       parameters:
