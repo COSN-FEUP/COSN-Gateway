@@ -45,7 +45,6 @@ public class VisualizationController {
 
         Map<String, Integer> params = new HashMap<String, Integer>();
         params.put("id", request.getId());
-
         String result = restTemplate.getForObject(URI_VISUALIZATION, String.class, params);
 
         return ResponseFactory.ok(result);
