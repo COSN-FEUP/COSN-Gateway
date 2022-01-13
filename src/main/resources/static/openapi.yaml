@@ -530,52 +530,36 @@ paths:
                 "$ref": "#/components/schemas/SimpleResponse"
   /logs:
     get:
-      tags:
-        - service-log-controller
-      operationId: getLogs
+      summary: Returns a list of logs.
+      description: Returns the logs from the Log Aggregation Service
+      parameters:
+        - name: startTime
+          in: query
+          required: false
+          description: The start timestamp of the filtering
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+        - name: endTime
+          in: query
+          required: false
+          description: The ending timestamp of the filtering
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
       responses:
-        '200':
-          description: OK
+        '200':    # status code
+          description: A JSON array of logs
           content:
-            "*/*":
+            application/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/serviceLog"
-    post:
-      tags:
-        - service-log-controller
-      operationId: addLogs
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/SimpleWrapper"
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            "*/*":
-              schema:
-                "$ref": "#/components/schemas/SimpleResponse"
-    delete:
-      tags:
-        - service-log-controller
-      operationId: deleteLogs
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/serviceLog"
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            "*/*":
-              schema:
-                "$ref": "#/components/schemas/SimpleResponse"
+                  $ref: '#/components/schemas/Log'
+        '500':
+          description: An error occurred while retreiving the logs
   /logsByService:
     get:
       tags:
