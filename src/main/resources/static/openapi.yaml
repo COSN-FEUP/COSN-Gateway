@@ -162,48 +162,9 @@ paths:
             '*/*':
               schema:
                 type: object
-  /executeOrder:
-    post:
-      tags:
-        - MAS Service
-      operationId: executeOrder
-      parameters:
-        - name: AuthToken
-          in: header
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrderRequest'
-        required: true
-      responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: object
+  ################################
+  #Roles
+  ################################
   /changeUserRole:
     post:
       tags:
@@ -313,53 +274,26 @@ paths:
             '*/*':
               schema:
                 type: object
-  /getSensorValues:
-    get:
+  ################################
+  #MAS Service
+  ################################
+  /executeOrder:
+    post:
       tags:
-        - Real System Service
-      operationId: getSensorValues
+        - MAS Service
+      operationId: executeOrder
       parameters:
         - name: AuthToken
           in: header
           required: true
           schema:
             type: string
-      responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: object
-  /getDomainModel:
-    get:
-      tags:
-        - Domain Model Service
-      operationId: getDomainModel
-      parameters:
-        - name: AuthToken
-          in: header
-          required: true
-          schema:
-            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+        required: true
       responses:
         "400":
           description: Bad Request
@@ -421,6 +355,87 @@ paths:
             '*/*':
               schema:
                 type: object
+  ################################
+  #Real System service
+  ################################
+  /getSensorValues:
+    get:
+      tags:
+        - Real System Service
+      operationId: getSensorValues
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  ################################
+  #Domain Model service
+  ################################
+  /getDomainModel:
+    get:
+      tags:
+        - Domain Model Service
+      operationId: getDomainModel
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  ################################
+  #Algorithms service
+  ################################
   /getAlgorithms:
     get:
       tags:
@@ -457,6 +472,86 @@ paths:
             '*/*':
               schema:
                 type: object
+  /getAlgorithmsName:
+    get:
+      tags:
+        - Algorithms Service
+      operationId: getAlgorithmsNames
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /getAlgorithmById:
+    get:
+      tags:
+        - Algorithms Service
+      operationId: getAlgorithmById
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: Id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  ################################
+  #Monitoring and Logging
+  ################################
   /health:
     get:
       summary: Returns the status of the service
