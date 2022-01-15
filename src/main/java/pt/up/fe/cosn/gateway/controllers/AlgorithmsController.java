@@ -34,12 +34,12 @@ public class AlgorithmsController {
     private final String[] mockAlgorithmsList = {"K-means", "DBSCAN", "Neural Network", "LightGBM", "Decision Tree"};
     private final List<Algorithm> Algorithms = new ArrayList<>();
 
-    private static String algorithmURL = "http://algorithmmicroservice.herokuapp.com";
+    private static String algorithmServiceURL = "http://algorithmmicroservice.herokuapp.com";
 
     @GetMapping("/getAlgorithms")
     @ResponseBody
     public ResponseEntity<Object> getAlgorithms(@RequestHeader("AuthToken") String authorization) {
-        String getAlgorithmsUrlPath = algorithmURL+"/algorithms";
+        String getAlgorithmsUrlPath = algorithmServiceURL +"/algorithms";
         String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/Algorithms";
 
         Claims claim = Utils.decodeJWT(authorization);
@@ -63,7 +63,7 @@ public class AlgorithmsController {
     @GetMapping("/getAlgorithmsName")
     @ResponseBody
     public ResponseEntity<Object> getAlgorithmsNames(@RequestHeader("AuthToken") String authorization) {
-        String getAlgorithmsUrlPath = algorithmURL+"/algorithms";
+        String getAlgorithmsUrlPath = algorithmServiceURL +"/algorithms";
         String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/Algorithms";
 
         Claims claim = Utils.decodeJWT(authorization);
@@ -93,7 +93,7 @@ public class AlgorithmsController {
     @GetMapping("/getAlgorithmById")
     @ResponseBody
     public ResponseEntity<Object> getAlgorithmById(@RequestHeader("AuthToken") String authorization, @RequestHeader("Id") String id) {
-        String getAlgorithmsUrlPath = algorithmURL+"/algorithms/"+id;
+        String getAlgorithmsUrlPath = algorithmServiceURL +"/algorithms/"+id;
         String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/Algorithms/"+id;
 
         Claims claim = Utils.decodeJWT(authorization);
@@ -120,7 +120,7 @@ public class AlgorithmsController {
     @GetMapping("/getWorkflows")
     @ResponseBody
     public ResponseEntity<Object> getWorkflows(@RequestHeader("AuthToken") String authorization) {
-        String getAlgorithmsUrlPath = algorithmURL+"/workflows/";
+        String getAlgorithmsUrlPath = algorithmServiceURL +"/workflows/";
         String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/Workflows";
 
         Claims claim = Utils.decodeJWT(authorization);

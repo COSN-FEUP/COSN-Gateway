@@ -12,48 +12,9 @@ servers:
   - url: http://localhost:8080
     description: Localhost server url
 paths:
-  /runVisualization:
-    post:
-      tags:
-        - Visualization Service
-      operationId: runVisualization
-      parameters:
-        - name: AuthToken
-          in: header
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VisualizationRequest'
-        required: true
-      responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: object
+  ################################
+  #Authentication
+  ################################
   /register:
     post:
       tags:
@@ -275,13 +236,13 @@ paths:
               schema:
                 type: object
   ################################
-  #MAS Service
+  #Visualization Service
   ################################
-  /executeOrder:
+  /runVisualization:
     post:
       tags:
-        - MAS Service
-      operationId: executeOrder
+        - Visualization Service
+      operationId: runVisualization
       parameters:
         - name: AuthToken
           in: header
@@ -292,7 +253,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderRequest'
+              $ref: '#/components/schemas/VisualizationRequest'
         required: true
       responses:
         "400":
@@ -319,13 +280,99 @@ paths:
             '*/*':
               schema:
                 type: object
-  /getAllOrders:
+  ################################
+  #MAS Service
+  ################################
+  /getMyWorkflows:
     get:
       tags:
         - MAS Service
-      operationId: getAllOrders
+      operationId: getMyWorkflows
       parameters:
         - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /runWorkflow:
+    post:
+      tags:
+        - MAS Service
+      operationId: runWorkflow
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowRequest'
+        required: true
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /getWorkflowById:
+    get:
+      tags:
+        - MAS Service
+      operationId: getAllWorkflows
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: Id
           in: header
           required: true
           schema:
@@ -434,12 +481,14 @@ paths:
               schema:
                 type: object
   ################################
-  #Algorithms service
+  #Artificial System service
   ################################
   /getAlgorithms:
     get:
+      summary: Returns all algorithms.
+      description: Returns all algorithms from the Artificial System Service
       tags:
-        - Algorithms Service
+        - Artificial System Service
       operationId: getAlgorithms
       parameters:
         - name: AuthToken
@@ -474,8 +523,10 @@ paths:
                 type: object
   /getAlgorithmsName:
     get:
+      summary: Returns all algorithm's name.
+      description: Returns all algorithm's name from the Artificial System Service
       tags:
-        - Algorithms Service
+        - Artificial System Service
       operationId: getAlgorithmsNames
       parameters:
         - name: AuthToken
@@ -510,8 +561,10 @@ paths:
                 type: object
   /getAlgorithmById:
     get:
+      summary: Returns an algorithms by ID.
+      description: Returns an algorithms by ID from the Artificial System Service
       tags:
-        - Algorithms Service
+        - Artificial System Service
       operationId: getAlgorithmById
       parameters:
         - name: AuthToken
@@ -733,6 +786,15 @@ components:
       properties:
         id:
           type: number
+    WorkflowRequest:
+      type: object
+      properties:
+        workflowId:
+          type: string
+        domainModelId:
+          type: string
+        description:
+          type: string
     UserRegisterRequest:
       type: object
       properties:

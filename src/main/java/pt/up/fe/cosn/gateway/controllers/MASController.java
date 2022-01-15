@@ -1,18 +1,21 @@
 package pt.up.fe.cosn.gateway.controllers;
 
 import io.jsonwebtoken.Claims;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pt.up.fe.cosn.gateway.advices.responses.ExecuteOrderResponse;
-import pt.up.fe.cosn.gateway.advices.responses.GenericResponse;
 import pt.up.fe.cosn.gateway.advices.responses.OrdersResponse;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
+import pt.up.fe.cosn.gateway.advices.responses.algorithmsResponses.AlgorithmResponse;
 import pt.up.fe.cosn.gateway.entities.Order;
 import pt.up.fe.cosn.gateway.entities.User;
 import pt.up.fe.cosn.gateway.factories.ResponseFactory;
 import pt.up.fe.cosn.gateway.requests.OrderRequest;
+import pt.up.fe.cosn.gateway.requests.masRequests.WorkflowRequest;
 import pt.up.fe.cosn.gateway.services.RoleService;
 import pt.up.fe.cosn.gateway.services.UserService;
 import pt.up.fe.cosn.gateway.utils.Utils;
@@ -34,6 +37,9 @@ public class MASController {
     private final String mockCity = "Porto";
     private final List<Order> orders = new ArrayList<>();
 
+    private static String masServiceURL = "https://mascontroller.herokuapp.com";
+
+    @Hidden
     @PostMapping("/executeOrder")
     public ResponseEntity<Object> executeOrder(@RequestHeader("AuthToken") String authorization, @RequestBody OrderRequest request) {
         Claims claim = Utils.decodeJWT(authorization);
@@ -56,9 +62,11 @@ public class MASController {
         return ResponseFactory.ok(new ExecuteOrderResponse(new Order(request.getLatitude(), request.getLongitude(), mockCity)));
     }
 
-    @GetMapping("/getAllOrders")
-    @ResponseBody
-    public ResponseEntity<Object> getAllOrders(@RequestHeader("AuthToken") String authorization) {
+    @PostMapping("/runWorkflow")
+    public ResponseEntity<Object> runWorkflow(@RequestHeader("AuthToken") String authorization, @RequestBody WorkflowRequest request) {
+        String getAlgorithmsUrlPath = masServiceURL +"/workflow/run";
+        String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/workflow";
+
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 
@@ -68,11 +76,61 @@ public class MASController {
         if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
             return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
 
-        //TODO Temporary mock values
-        for (int i = 0; i < 5; i++) {
-            Random r = new Random();
-            orders.add(new Order (r.nextDouble(), r.nextDouble() + i, mockCity + i));
-        }
-        return ResponseFactory.ok(new OrdersResponse(orders));
+        Map<String, String> order = new HashMap<String, String>();
+        order.put("workflowId", request.getWorkflowId());
+        order.put("domainModelId", request.getDomainModelId());
+        order.put("userId", userOptional.get().getId().toString());
+        order.put("description", request.getDescription());
+
+        String result = restTemplate.postForObject(tempURL, order, String.class);
+
+        return ResponseFactory.ok(result);
+    }
+
+    @GetMapping("/getMyWorkflows")
+    @ResponseBody
+    public ResponseEntity<Object> getMyWorkflows(@RequestHeader("AuthToken") String authorization) {
+        String getAlgorithmsUrlPath = masServiceURL +"/workflow/findAll";
+        String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/workflow";
+
+        Claims claim = Utils.decodeJWT(authorization);
+        Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
+
+        if(userOptional.isEmpty())
+            return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
+
+        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("userId", userOptional.get().getId().toString());
+
+        String result = restTemplate.postForObject(tempURL, params, String.class);
+
+        return ResponseFactory.ok(result);
+    }
+
+    @GetMapping("/getWorkflowById")
+    @ResponseBody
+    public ResponseEntity<Object> getAllWorkflows(@RequestHeader("AuthToken") String authorization, @RequestHeader("Id") String id) {
+        String getAlgorithmsUrlPath = masServiceURL +"/workflow/findById";
+        String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/workflow";
+
+        Claims claim = Utils.decodeJWT(authorization);
+        Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
+
+        if(userOptional.isEmpty())
+            return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
+
+        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("workflowExecutionId", id);
+        params.put("userId", userOptional.get().getId().toString());
+
+        String result = restTemplate.postForObject(tempURL, params, String.class);
+
+        return ResponseFactory.ok(result);
     }
 }
