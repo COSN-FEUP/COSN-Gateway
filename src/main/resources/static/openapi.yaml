@@ -318,7 +318,7 @@ paths:
           content:
             '*/*':
               schema:
-                type: object
+                $ref: '#/components/schemas/MyWorkflowResponse'
   /runWorkflow:
     post:
       tags:
@@ -360,7 +360,7 @@ paths:
           content:
             '*/*':
               schema:
-                type: object
+                $ref: '#/components/schemas/RunWorkflowResponse'
   /getWorkflowById:
     get:
       tags:
@@ -401,7 +401,7 @@ paths:
           content:
             '*/*':
               schema:
-                type: object
+                $ref: '#/components/schemas/RunWorkflowResponse'
   ################################
   #Real System service
   ################################
@@ -786,6 +786,39 @@ components:
       properties:
         id:
           type: number
+    RunWorkflowResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        workflowExecution:
+          $ref: '#/components/schemas/WorkflowRequest'
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowRequest'
+    MyWorkflowResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        workflowExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowRequest'
+        logs:
+          type: array
+          items:
+            type: object
+            properties:
+              action:
+                type: string
+              message:
+                type: string
     WorkflowRequest:
       type: object
       properties:

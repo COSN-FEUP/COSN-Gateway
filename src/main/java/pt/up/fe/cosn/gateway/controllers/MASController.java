@@ -11,6 +11,9 @@ import pt.up.fe.cosn.gateway.advices.responses.ExecuteOrderResponse;
 import pt.up.fe.cosn.gateway.advices.responses.OrdersResponse;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
 import pt.up.fe.cosn.gateway.advices.responses.algorithmsResponses.AlgorithmResponse;
+import pt.up.fe.cosn.gateway.advices.responses.algorithmsResponses.WorkflowResponse;
+import pt.up.fe.cosn.gateway.advices.responses.masResponses.MyWorkflowResponse;
+import pt.up.fe.cosn.gateway.advices.responses.masResponses.RunWorkflowResponse;
 import pt.up.fe.cosn.gateway.entities.Order;
 import pt.up.fe.cosn.gateway.entities.User;
 import pt.up.fe.cosn.gateway.factories.ResponseFactory;
@@ -65,7 +68,6 @@ public class MASController {
     @PostMapping("/runWorkflow")
     public ResponseEntity<Object> runWorkflow(@RequestHeader("AuthToken") String authorization, @RequestBody WorkflowRequest request) {
         String getAlgorithmsUrlPath = masServiceURL +"/workflow/run";
-        String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/workflow";
 
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
@@ -82,7 +84,7 @@ public class MASController {
         order.put("userId", userOptional.get().getId().toString());
         order.put("description", request.getDescription());
 
-        String result = restTemplate.postForObject(tempURL, order, String.class);
+        RunWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, order, RunWorkflowResponse.class);
 
         return ResponseFactory.ok(result);
     }
@@ -91,7 +93,6 @@ public class MASController {
     @ResponseBody
     public ResponseEntity<Object> getMyWorkflows(@RequestHeader("AuthToken") String authorization) {
         String getAlgorithmsUrlPath = masServiceURL +"/workflow/findAll";
-        String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/workflow";
 
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
@@ -105,7 +106,7 @@ public class MASController {
         Map<String, String> params = new HashMap<String, String>();
         params.put("userId", userOptional.get().getId().toString());
 
-        String result = restTemplate.postForObject(tempURL, params, String.class);
+        MyWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, params, MyWorkflowResponse.class);
 
         return ResponseFactory.ok(result);
     }
@@ -114,7 +115,6 @@ public class MASController {
     @ResponseBody
     public ResponseEntity<Object> getAllWorkflows(@RequestHeader("AuthToken") String authorization, @RequestHeader("Id") String id) {
         String getAlgorithmsUrlPath = masServiceURL +"/workflow/findById";
-        String tempURL = "https://61d8d203e6744d0017ba8cc5.mockapi.io/workflow";
 
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
@@ -129,7 +129,7 @@ public class MASController {
         params.put("workflowExecutionId", id);
         params.put("userId", userOptional.get().getId().toString());
 
-        String result = restTemplate.postForObject(tempURL, params, String.class);
+        RunWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, params, RunWorkflowResponse.class);
 
         return ResponseFactory.ok(result);
     }
