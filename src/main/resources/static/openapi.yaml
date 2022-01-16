@@ -242,6 +242,7 @@ paths:
     post:
       tags:
         - Visualization Service
+      summary: Returns all workflows from a user.
       operationId: runVisualization
       parameters:
         - name: AuthToken
@@ -287,6 +288,7 @@ paths:
     get:
       tags:
         - MAS Service
+      summary: Returns all workflows from a user.
       operationId: getMyWorkflows
       parameters:
         - name: AuthToken
@@ -323,6 +325,7 @@ paths:
     post:
       tags:
         - MAS Service
+      summary: Execute a workflow.
       operationId: runWorkflow
       parameters:
         - name: AuthToken
@@ -365,6 +368,7 @@ paths:
     get:
       tags:
         - MAS Service
+      summary: Return a workflow by ID.
       operationId: getAllWorkflows
       parameters:
         - name: AuthToken
@@ -405,13 +409,86 @@ paths:
   ################################
   #Real System service
   ################################
-  /getSensorValues:
+  /getSensorByType:
     get:
       tags:
         - Real System Service
-      operationId: getSensorValues
+      summary: Return sensor value by type and start/end time.
+      operationId: getSensorByType
       parameters:
         - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: startTime
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: endTime
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /getSensorByGps:
+    get:
+      tags:
+        - Real System Service
+      summary: Return sensor value by latitude/longitude and start/end time.
+      operationId: getSensorByGps
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: latitude
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: longitude
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: startTime
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: endTime
           in: header
           required: true
           schema:
@@ -444,11 +521,52 @@ paths:
   ################################
   #Domain Model service
   ################################
-  /getDomainModel:
+  /getAllDomainModels:
     get:
       tags:
         - Domain Model Service
-      operationId: getDomainModel
+      summary: Returns all available domain models.
+      operationId: getAllDomainModels
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  ################################
+  #Monitoring
+  ################################
+  /getSystemHealth:
+    get:
+      tags:
+        - Monitoring System
+      summary: Return health system information.
+      operationId: getSystemHealth
       parameters:
         - name: AuthToken
           in: header
@@ -485,7 +603,7 @@ paths:
   ################################
   /getAlgorithms:
     get:
-      summary: Returns all algorithms.
+      summary: Returns all available algorithms.
       description: Returns all algorithms from the Artificial System Service
       tags:
         - Artificial System Service
@@ -523,7 +641,7 @@ paths:
                 type: object
   /getAlgorithmsName:
     get:
-      summary: Returns all algorithm's name.
+      summary: Returns all available algorithm's name.
       description: Returns all algorithm's name from the Artificial System Service
       tags:
         - Artificial System Service
@@ -561,8 +679,8 @@ paths:
                 type: object
   /getAlgorithmById:
     get:
-      summary: Returns an algorithms by ID.
-      description: Returns an algorithms by ID from the Artificial System Service
+      summary: Returns an algorithm by ID.
+      description: Returns an algorithm by ID from the Artificial System Service
       tags:
         - Artificial System Service
       operationId: getAlgorithmById
