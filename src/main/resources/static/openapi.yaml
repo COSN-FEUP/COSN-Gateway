@@ -1,6 +1,7 @@
 openapi: 3.0.1
 info:
   title: COSN API Gateway
+  description: Mobility Monitoring and Simulation System
   version: 1.0.0
 servers:
   - url: https://cosn-api-gateway.herokuapp.com
@@ -641,8 +642,8 @@ paths:
                 type: object
   /getAlgorithmsName:
     get:
-      summary: Return all available algorithm's name.
-      description: Return all algorithm's name from the Algorithms Service
+      summary: Return all available algorithms name.
+      description: Return all algorithms name from the Algorithms Service
       tags:
         - Algorithms Service
       operationId: getAlgorithmsNames
