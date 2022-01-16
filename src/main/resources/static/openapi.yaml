@@ -1,6 +1,7 @@
 openapi: 3.0.1
 info:
   title: COSN API Gateway
+  description: Mobility Monitoring and Simulation System
   version: 1.0.0
 servers:
   - url: https://cosn-api-gateway.herokuapp.com
