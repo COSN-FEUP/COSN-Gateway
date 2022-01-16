@@ -29,6 +29,7 @@ public class RealSystemController {
     @GetMapping("/getSensorByType")
     @ResponseBody
     public ResponseEntity<Object> getSensorByType(@RequestHeader("AuthToken") String authorization, @RequestHeader("type") String type,
+                                                  @RequestHeader("latitude") String latitude , @RequestHeader("longitude") String longitude,
                                                   @RequestHeader("startTime") String startTime , @RequestHeader("endTime") String endTime) {
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
@@ -44,10 +45,11 @@ public class RealSystemController {
         return ResponseFactory.ok("Sensor Values " + r.nextDouble());
     }
 
-    @GetMapping("/getSensorByGps")
+    @GetMapping("/getSensorValues")
     @ResponseBody
-    public ResponseEntity<Object> getSensorByGps(@RequestHeader("AuthToken") String authorization, @RequestHeader("latitude") String latitude , @RequestHeader("longitude") String longitude,
-                                                 @RequestHeader("startTime") String startTime , @RequestHeader("endTime") String endTime) {
+    public ResponseEntity<Object> getSensorValues(@RequestHeader("AuthToken") String authorization, @RequestHeader("latitude") String latitude,
+                                                  @RequestHeader("longitude") String longitude, @RequestHeader("startTime") String startTime,
+                                                  @RequestHeader("endTime") String endTime) {
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 

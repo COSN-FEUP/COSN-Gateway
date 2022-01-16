@@ -414,7 +414,7 @@ paths:
     get:
       tags:
         - Real System Service
-      summary: Return sensor value by type and start/end time.
+      summary: Return sensor value by latitude/longitude (by type) and start/end time.
       operationId: getSensorByType
       parameters:
         - name: AuthToken
@@ -423,6 +423,16 @@ paths:
           schema:
             type: string
         - name: type
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: latitude
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: longitude
           in: header
           required: true
           schema:
@@ -462,12 +472,12 @@ paths:
             '*/*':
               schema:
                 type: object
-  /getSensorByGps:
+  /getSensorValues:
     get:
       tags:
         - Real System Service
       summary: Return sensor value by latitude/longitude and start/end time.
-      operationId: getSensorByGps
+      operationId: getSensorValues
       parameters:
         - name: AuthToken
           in: header
