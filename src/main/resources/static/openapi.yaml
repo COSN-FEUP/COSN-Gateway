@@ -600,14 +600,14 @@ paths:
               schema:
                 type: object
   ################################
-  #Artificial System service
+  #Algorithms service
   ################################
   /getAlgorithms:
     get:
       summary: Return all available algorithms.
-      description: Return all algorithms from the Artificial System Service
+      description: Return all algorithms from the Algorithms Service
       tags:
-        - Artificial System Service
+        - Algorithms Service
       operationId: getAlgorithms
       parameters:
         - name: AuthToken
@@ -643,9 +643,9 @@ paths:
   /getAlgorithmsName:
     get:
       summary: Return all available algorithm's name.
-      description: Return all algorithm's name from the Artificial System Service
+      description: Return all algorithm's name from the Algorithms Service
       tags:
-        - Artificial System Service
+        - Algorithms Service
       operationId: getAlgorithmsNames
       parameters:
         - name: AuthToken
@@ -681,9 +681,9 @@ paths:
   /getAlgorithmById:
     get:
       summary: Return an algorithm by ID.
-      description: Return an algorithm by ID from the Artificial System Service
+      description: Return an algorithm by ID from the Algorithms Service
       tags:
-        - Artificial System Service
+        - Algorithms Service
       operationId: getAlgorithmById
       parameters:
         - name: AuthToken
