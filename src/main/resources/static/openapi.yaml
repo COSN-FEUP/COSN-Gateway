@@ -242,7 +242,7 @@ paths:
     post:
       tags:
         - Visualization Service
-      summary: Returns all workflows from a user.
+      summary: Return all workflows from a user.
       operationId: runVisualization
       parameters:
         - name: AuthToken
@@ -288,7 +288,7 @@ paths:
     get:
       tags:
         - MAS Service
-      summary: Returns all workflows from a user.
+      summary: Return all workflows from a user.
       operationId: getMyWorkflows
       parameters:
         - name: AuthToken
@@ -525,7 +525,7 @@ paths:
     get:
       tags:
         - Domain Model Service
-      summary: Returns all available domain models.
+      summary: Return all available domain models.
       operationId: getAllDomainModels
       parameters:
         - name: AuthToken
@@ -603,8 +603,8 @@ paths:
   ################################
   /getAlgorithms:
     get:
-      summary: Returns all available algorithms.
-      description: Returns all algorithms from the Artificial System Service
+      summary: Return all available algorithms.
+      description: Return all algorithms from the Artificial System Service
       tags:
         - Artificial System Service
       operationId: getAlgorithms
@@ -641,8 +641,8 @@ paths:
                 type: object
   /getAlgorithmsName:
     get:
-      summary: Returns all available algorithm's name.
-      description: Returns all algorithm's name from the Artificial System Service
+      summary: Return all available algorithm's name.
+      description: Return all algorithm's name from the Artificial System Service
       tags:
         - Artificial System Service
       operationId: getAlgorithmsNames
@@ -679,8 +679,8 @@ paths:
                 type: object
   /getAlgorithmById:
     get:
-      summary: Returns an algorithm by ID.
-      description: Returns an algorithm by ID from the Artificial System Service
+      summary: Return an algorithm by ID.
+      description: Return an algorithm by ID from the Artificial System Service
       tags:
         - Artificial System Service
       operationId: getAlgorithmById
@@ -725,8 +725,8 @@ paths:
   ################################
   /health:
     get:
-      summary: Returns the status of the service
-      description: This endpoint returns status 200 to notify the Health Checking Service that it's working as intended.
+      summary: Return the status of the service
+      description: This endpoint return status 200 to notify the Health Checking Service that it's working as intended.
       responses:
         '200':
           description: The response if the service is working as intended.
@@ -796,8 +796,8 @@ paths:
                 "$ref": "#/components/schemas/SimpleResponse"
   /logs:
     get:
-      summary: Returns a list of logs.
-      description: Returns the logs from the Log Aggregation Service
+      summary: Return a list of logs.
+      description: Return the logs from the Log Aggregation Service
       parameters:
         - name: startTime
           in: query
