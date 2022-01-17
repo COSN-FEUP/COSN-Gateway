@@ -4,7 +4,13 @@ import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pt.up.fe.cosn.gateway.advices.responses.ExecuteOrderResponse;
@@ -84,7 +90,13 @@ public class MASController {
         order.put("userId", userOptional.get().getId().toString());
         order.put("description", request.getDescription());
 
-        RunWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, order, RunWorkflowResponse.class);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("AuthToken", authorization);
+        headers.add("Content-Type", "application/json");
+
+        HttpEntity<Map<String, String>> requestParams = new HttpEntity<Map<String, String>>(order, headers);
+
+        RunWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, requestParams, RunWorkflowResponse.class);
 
         return ResponseFactory.ok(result);
     }
@@ -106,7 +118,13 @@ public class MASController {
         Map<String, String> params = new HashMap<String, String>();
         params.put("userId", userOptional.get().getId().toString());
 
-        MyWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, params, MyWorkflowResponse.class);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("AuthToken", authorization);
+        headers.add("Content-Type", "application/json");
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<Map<String, String>>(params, headers);
+
+        MyWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, request, MyWorkflowResponse.class);
 
         return ResponseFactory.ok(result);
     }
@@ -129,7 +147,13 @@ public class MASController {
         params.put("workflowExecutionId", id);
         params.put("userId", userOptional.get().getId().toString());
 
-        RunWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, params, RunWorkflowResponse.class);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("AuthToken", authorization);
+        headers.add("Content-Type", "application/json");
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<Map<String, String>>(params, headers);
+
+        RunWorkflowResponse result = restTemplate.postForObject(getAlgorithmsUrlPath, request, RunWorkflowResponse.class);
 
         return ResponseFactory.ok(result);
     }
