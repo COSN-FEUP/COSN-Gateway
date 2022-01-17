@@ -410,6 +410,43 @@ paths:
   ################################
   #Real System service
   ################################
+  /getAllCities:
+    get:
+      tags:
+        - Real System Service
+      summary: Return all cities.
+      operationId: getAllCities
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
   /getSensorByType:
     get:
       tags:
@@ -717,10 +754,9 @@ paths:
   /health:
     get:
       summary: Returns the status of the service
-      description: This endpoint returns status 200 to notify the Health Checking
-        Service that it's working as intended.
+      description: This endpoint returns status 200 to notify the Health Checking Service that its working as intended.
       responses:
-        '200':
+        "200":
           description: The response if the service is working as intended.
   /services:
     get:
@@ -728,12 +764,12 @@ paths:
         - service-controller
       operationId: getService
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
-                "$ref": "#/components/schemas/SimpleResponse"
+                $ref: "#/components/schemas/SimpleResponse"
     put:
       tags:
         - service-controller
@@ -742,15 +778,15 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/service"
+              $ref: "#/components/schemas/service"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
-                "$ref": "#/components/schemas/SimpleResponse"
+                $ref: "#/components/schemas/SimpleResponse"
     delete:
       tags:
         - service-controller
@@ -759,15 +795,15 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/service"
+              $ref: "#/components/schemas/service"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
-                "$ref": "#/components/schemas/SimpleResponse"
+                $ref: "#/components/schemas/SimpleResponse"
   /registerService:
     post:
       tags:
@@ -777,15 +813,15 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/service"
+              $ref: "#/components/schemas/service"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
-                "$ref": "#/components/schemas/SimpleResponse"
+                $ref: "#/components/schemas/SimpleResponse"
   /logs:
     get:
       summary: Returns a list of logs.
@@ -816,7 +852,7 @@ paths:
             format: utf8
             minimum: 0
       responses:
-        '200':
+        "200":
           description: A JSON array of logs
           content:
             application/json:
@@ -824,7 +860,7 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/Log"
-        '500':
+        "500":
           description: An error occurred while retreiving the logs
   /logsByService:
     get:
