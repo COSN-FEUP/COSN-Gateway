@@ -91,7 +91,7 @@ public class MASController {
         order.put("description", request.getDescription());
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("AuthToken", authorization);
+        headers.add("Authorization", "Bearer " + authorization);
         headers.add("Content-Type", "application/json");
 
         HttpEntity<Map<String, String>> requestParams = new HttpEntity<Map<String, String>>(order, headers);
@@ -119,7 +119,7 @@ public class MASController {
         params.put("userId", userOptional.get().getId().toString());
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("AuthToken", authorization);
+        headers.add("Authorization", "Bearer " + authorization);
         headers.add("Content-Type", "application/json");
 
         HttpEntity<Map<String, String>> request = new HttpEntity<Map<String, String>>(params, headers);
@@ -148,7 +148,7 @@ public class MASController {
         params.put("userId", userOptional.get().getId().toString());
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("AuthToken", authorization);
+        headers.add("Authorization", "Bearer " + authorization);
         headers.add("Content-Type", "application/json");
 
         HttpEntity<Map<String, String>> request = new HttpEntity<Map<String, String>>(params, headers);

@@ -414,7 +414,7 @@ paths:
     get:
       tags:
         - Real System Service
-      summary: Return sensor value by latitude/longitude (by type) and start/end time.
+      summary: Return sensors value by type and radius.
       operationId: getSensorByType
       parameters:
         - name: AuthToken
@@ -422,28 +422,18 @@ paths:
           required: true
           schema:
             type: string
+        - name: cityId
+          in: query
+          required: true
+          schema:
+            type: string
         - name: type
-          in: header
+          in: query
           required: true
           schema:
             type: string
-        - name: latitude
-          in: header
-          required: true
-          schema:
-            type: string
-        - name: longitude
-          in: header
-          required: true
-          schema:
-            type: string
-        - name: startTime
-          in: header
-          required: true
-          schema:
-            type: string
-        - name: endTime
-          in: header
+        - name: radius
+          in: query
           required: true
           schema:
             type: string
@@ -476,7 +466,7 @@ paths:
     get:
       tags:
         - Real System Service
-      summary: Return sensor value by latitude/longitude and start/end time.
+      summary: Return all sensors value by radius.
       operationId: getSensorValues
       parameters:
         - name: AuthToken
@@ -484,23 +474,13 @@ paths:
           required: true
           schema:
             type: string
-        - name: latitude
-          in: header
+        - name: cityId
+          in: query
           required: true
           schema:
             type: string
-        - name: longitude
-          in: header
-          required: true
-          schema:
-            type: string
-        - name: startTime
-          in: header
-          required: true
-          schema:
-            type: string
-        - name: endTime
-          in: header
+        - name: radius
+          in: query
           required: true
           schema:
             type: string
@@ -736,8 +716,9 @@ paths:
   ################################
   /health:
     get:
-      summary: Return the status of the service
-      description: This endpoint return status 200 to notify the Health Checking Service that it's working as intended.
+      summary: Returns the status of the service
+      description: This endpoint returns status 200 to notify the Health Checking
+        Service that it's working as intended.
       responses:
         '200':
           description: The response if the service is working as intended.
@@ -807,8 +788,8 @@ paths:
                 "$ref": "#/components/schemas/SimpleResponse"
   /logs:
     get:
-      summary: Return a list of logs.
-      description: Return the logs from the Log Aggregation Service
+      summary: Returns a list of logs.
+      description: Returns the logs from the Log Aggregation Service
       parameters:
         - name: startTime
           in: query
@@ -826,16 +807,24 @@ paths:
             type: integer
             format: int64
             minimum: 0
+        - name: serviceName
+          in: query
+          required: false
+          description: The service name
+          schema:
+            type: string
+            format: utf8
+            minimum: 0
       responses:
-        "200":
+        '200':
           description: A JSON array of logs
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Log'
-        "500":
+                  "$ref": "#/components/schemas/Log"
+        '500':
           description: An error occurred while retreiving the logs
   /logsByService:
     get:
@@ -894,14 +883,17 @@ components:
     Log:
       type: object
       required:
-        - logType
+        - messageType
         - operationType
+        - serviceName
       properties:
-        logType:
-          $ref: '#/components/schemas/LogType'
+        messageType:
+          "$ref": "#/components/schemas/LogType"
         operationType:
-          $ref: '#/components/schemas/OperationType'
+          "$ref": "#/components/schemas/OperationType"
         message:
+          type: string
+        serviceName:
           type: string
     SimpleResponse:
       type: object
