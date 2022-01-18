@@ -74,9 +74,9 @@ public class RoleService {
     public void fillBasicRoles() {
         roleRepository.save(new Role("Administrator", 0L));
         roleRepository.save(new Role("Moderator", 100L));
-        roleRepository.save(new Role("Researcher", 500L));
-        roleRepository.save(new Role("ServiceProvider", 500L));
-        roleRepository.save(new Role("AppDeveloper", 500L));
+        roleRepository.save(new Role("Researcher", 497L));
+        roleRepository.save(new Role("ServiceProvider", 498L));
+        roleRepository.save(new Role("AppDeveloper", 499L));
         roleRepository.save(new Role("User", 500L));
     }
 }
