@@ -53,7 +53,7 @@ public class RoleController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
+        if(!userOptional.get().getRole().getName().equalsIgnoreCase(roleService.getAdministratorRole().get().getName()))
             return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
 
         if(request == null || request.getEmail() == null || request.getRoleId() == null)

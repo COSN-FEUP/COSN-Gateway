@@ -46,22 +46,37 @@ public class RoleService {
         return true;
     }
 
-    public Optional<Role> getAdministratorRole(){
-        return roleRepository.findRoleByName("Administrator");
+    public Optional<Role> getUserRole(){
+        return roleRepository.findRoleByName("User");
+    }
+
+    public Optional<Role> getAppDeveloperRole(){
+        return roleRepository.findRoleByName("AppDeveloper");
+    }
+
+    public Optional<Role> getServiceProviderRole(){
+        return roleRepository.findRoleByName("ServiceProvider");
+    }
+
+    public Optional<Role> getResearcherRole(){
+        return roleRepository.findRoleByName("Researcher");
     }
 
     public Optional<Role> getModeratorRole(){
         return roleRepository.findRoleByName("Moderator");
     }
 
-    public Optional<Role> getUserRole(){
-        return roleRepository.findRoleByName("User");
+    public Optional<Role> getAdministratorRole(){
+        return roleRepository.findRoleByName("Administrator");
     }
 
     @PostConstruct
     public void fillBasicRoles() {
         roleRepository.save(new Role("Administrator", 0L));
         roleRepository.save(new Role("Moderator", 100L));
+        roleRepository.save(new Role("Researcher", 500L));
+        roleRepository.save(new Role("ServiceProvider", 500L));
+        roleRepository.save(new Role("AppDeveloper", 500L));
         roleRepository.save(new Role("User", 500L));
     }
 }
