@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.up.fe.cosn.gateway.advices.responses.GenericResponse;
 import pt.up.fe.cosn.gateway.advices.responses.LoginResponse;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
 import pt.up.fe.cosn.gateway.advices.responses.UserFromTokenResponse;
@@ -33,14 +34,7 @@ public class UserController {
     @Hidden
     @GetMapping("/")
     @ResponseBody
-    public ResponseEntity<Object> getHome(HttpServletResponse response) throws IOException {
-        return ResponseFactory.ok("Use /swagger to access swagger page");
-    }
-
-    @Hidden
-    @GetMapping("/swagger")
-    @ResponseBody
-    public void getSwagger(HttpServletResponse response) throws IOException {
+    public void getHome(HttpServletResponse response) throws IOException {
         response.sendRedirect("/swagger-ui.html");
     }
 
