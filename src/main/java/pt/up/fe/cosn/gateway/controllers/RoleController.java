@@ -45,7 +45,7 @@ public class RoleController {
     }
 
     @PostMapping("/changeUserRole")
-    public ResponseEntity<Object> changeUserRole(@RequestHeader("AuthToken") String authorization, @RequestBody UserRoleChangeRequest request){
+    public ResponseEntity<Object> changeUserRole(@RequestHeader("Authorization") String authorization, @RequestBody UserRoleChangeRequest request){
 
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
