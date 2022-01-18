@@ -676,6 +676,63 @@ paths:
               schema:
                 type: object
   ################################
+  #Real System service
+  ################################
+  /getSensorsValues:
+    get:
+      tags:
+        - Real System Service
+      summary: Return all sensor values by time interval.
+      operationId: getAllValues
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: sensorsIds
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: startTime
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  ################################
   #Monitoring
   ################################
   /getSystemHealth:
