@@ -4,18 +4,15 @@ info:
   description: Mobility Monitoring and Simulation System
   version: 1.0.1
 servers:
-  - url: https://cosn-api-gateway.herokuapp.com
+  - url: 'https://cosn-api-gateway.herokuapp.com'
     description: Heroku server url
-  - url: https://cosn-health-checking.herokuapp.com
+  - url: 'https://cosn-health-checking.herokuapp.com'
     description: Health check server url
-  - url: https://cosn-log-aggregation.herokuapp.com
+  - url: 'https://cosn-log-aggregation.herokuapp.com'
     description: Log Aggregation Service for the COSN system
-  - url: http://localhost:8080
+  - url: 'http://localhost:8080'
     description: Localhost server url
 paths:
-  ################################
-  #Authentication
-  ################################
   /register:
     post:
       tags:
@@ -28,30 +25,30 @@ paths:
               $ref: '#/components/schemas/UserRegisterRequest'
         required: true
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /login:
     post:
       tags:
@@ -64,30 +61,30 @@ paths:
               $ref: '#/components/schemas/UserLoginRequest'
         required: true
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getUserFromToken:
     post:
       tags:
@@ -100,33 +97,30 @@ paths:
               $ref: '#/components/schemas/UserFromTokenRequest'
         required: true
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
-  ################################
-  #Roles
-  ################################
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /changeUserRole:
     post:
       tags:
@@ -145,61 +139,61 @@ paths:
               $ref: '#/components/schemas/UserRoleChangeRequest'
         required: true
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /roles:
     get:
       tags:
         - Roles Managment
       operationId: getAllRoles
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
-  /role/{roleId}:
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  '/role/{roleId}':
     get:
       tags:
         - Roles Managment
@@ -212,33 +206,30 @@ paths:
             type: integer
             format: int64
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
-  ################################
-  #Visualization Service
-  ################################
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /runVisualization:
     post:
       tags:
@@ -258,33 +249,30 @@ paths:
               $ref: '#/components/schemas/VisualizationRequest'
         required: true
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
-  ################################
-  #MAS Service
-  ################################
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getMyWorkflows:
     get:
       tags:
@@ -298,30 +286,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/MyWorkflowResponse'
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /runWorkflow:
     post:
       tags:
@@ -341,30 +329,30 @@ paths:
               $ref: '#/components/schemas/WorkflowRequest'
         required: true
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/RunWorkflowResponse'
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getWorkflowById:
     get:
       tags:
@@ -383,33 +371,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/RunWorkflowResponse'
-  ################################
-  #City service
-  ################################
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getAllCities:
     get:
       tags:
@@ -423,30 +408,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getSensorByType/static:
     get:
       tags:
@@ -475,30 +460,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getSensorValues/static:
     get:
       tags:
@@ -522,30 +507,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getSensorType/mobile:
     get:
       tags:
@@ -569,30 +554,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getSensorCity/mobile:
     get:
       tags:
@@ -611,33 +596,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
-  ################################
-  #Domain Model service
-  ################################
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getAllDomainModels:
     get:
       tags:
@@ -651,33 +633,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
-  ################################
-  #Monitoring
-  ################################
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getSystemHealth:
     get:
       tags:
@@ -691,33 +670,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
-  ################################
-  #Algorithms service
-  ################################
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getAlgorithms:
     get:
       summary: Return all available algorithms.
@@ -732,30 +708,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getAlgorithmsName:
     get:
       summary: Return all available algorithms name.
@@ -770,30 +746,30 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /getAlgorithmById:
     get:
       summary: Return an algorithm by ID.
@@ -813,39 +789,38 @@ paths:
           schema:
             type: string
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "226":
-          description: IM Used
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-        "200":
+        '200':
           description: OK
           content:
             '*/*':
               schema:
                 type: object
-  ################################
-  #Monitoring and Logging
-  ################################
+        '226':
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
   /health:
     get:
       summary: Returns the status of the service
-      description: This endpoint returns status 200 to notify the Health Checking Service that its working as intended.
+      description: >-
+        This endpoint returns status 200 to notify the Health Checking Service
+        that its working as intended.
       responses:
-        "200":
+        '200':
           description: The response if the service is working as intended.
   /services:
     get:
@@ -853,12 +828,12 @@ paths:
         - service-controller
       operationId: getService
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            "*/*":
+            '*/*':
               schema:
-                $ref: "#/components/schemas/SimpleResponse"
+                $ref: '#/components/schemas/SimpleResponse'
     put:
       tags:
         - service-controller
@@ -867,15 +842,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/service"
+              $ref: '#/components/schemas/service'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            "*/*":
+            '*/*':
               schema:
-                $ref: "#/components/schemas/SimpleResponse"
+                $ref: '#/components/schemas/SimpleResponse'
     delete:
       tags:
         - service-controller
@@ -884,15 +859,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/service"
+              $ref: '#/components/schemas/service'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            "*/*":
+            '*/*':
               schema:
-                $ref: "#/components/schemas/SimpleResponse"
+                $ref: '#/components/schemas/SimpleResponse'
   /registerService:
     post:
       tags:
@@ -902,15 +877,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/service"
+              $ref: '#/components/schemas/service'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            "*/*":
+            '*/*':
               schema:
-                $ref: "#/components/schemas/SimpleResponse"
+                $ref: '#/components/schemas/SimpleResponse'
   /logs:
     get:
       summary: Returns a list of logs.
@@ -941,15 +916,15 @@ paths:
             format: utf8
             minimum: 0
       responses:
-        "200":
+        '200':
           description: A JSON array of logs
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Log"
-        "500":
+                  $ref: '#/components/schemas/Log'
+        '500':
           description: An error occurred while retreiving the logs
   /logsByService:
     get:
@@ -961,14 +936,14 @@ paths:
           in: query
           required: true
           schema:
-            "$ref": "#/components/schemas/SimpleWrapper"
+            $ref: '#/components/schemas/SimpleWrapper'
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            "*/*":
+            '*/*':
               schema:
-                "$ref": "#/components/schemas/SimpleResponse"
+                $ref: '#/components/schemas/SimpleResponse'
   /logsByServiceTimestamp:
     get:
       tags:
@@ -979,14 +954,14 @@ paths:
           in: query
           required: true
           schema:
-            "$ref": "#/components/schemas/SimpleWrapper"
+            $ref: '#/components/schemas/SimpleWrapper'
       responses:
-        "200":
+        '200':
           description: OK
           content:
-            "*/*":
+            '*/*':
               schema:
-                "$ref": "#/components/schemas/SimpleResponse"
+                $ref: '#/components/schemas/SimpleResponse'
 components:
   schemas:
     LogType:
@@ -1013,9 +988,9 @@ components:
         - serviceName
       properties:
         messageType:
-          "$ref": "#/components/schemas/LogType"
+          $ref: '#/components/schemas/LogType'
         operationType:
-          "$ref": "#/components/schemas/OperationType"
+          $ref: '#/components/schemas/OperationType'
         message:
           type: string
         serviceName:
@@ -1128,7 +1103,7 @@ components:
         logs:
           type: array
           items:
-            "$ref": "#/components/schemas/serviceLog"
+            $ref: '#/components/schemas/serviceLog'
     serviceLog:
       type: object
       properties:
@@ -1151,6 +1126,6 @@ components:
           type: string
           format: date-time
         ser:
-          "$ref": "#/components/schemas/service"
+          $ref: '#/components/schemas/service'
         serLog:
-          "$ref": "#/components/schemas/serviceLog"
+          $ref: '#/components/schemas/serviceLog'
