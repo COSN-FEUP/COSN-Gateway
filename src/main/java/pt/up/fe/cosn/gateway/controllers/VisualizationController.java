@@ -30,6 +30,11 @@ public class VisualizationController {
     @Autowired
     private RestTemplate restTemplate;
 
+    private Boolean hasPermission(Optional<User> user, RoleService role){
+        //TODO Add role authentication filter
+        return true;
+    }
+
     @PostMapping("/runVisualization")
     public ResponseEntity<Object> runVisualization(@RequestHeader("AuthToken") String authorization, @RequestBody VisualizationRequest request) throws IOException {
         Claims claim = Utils.decodeJWT(authorization);
@@ -38,7 +43,7 @@ public class VisualizationController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
+        if(!hasPermission(userOptional, roleService))
             return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
 
         String URI_VISUALIZATION = "https://61d8d203e6744d0017ba8cc5.mockapi.io/Visualization/{id}";

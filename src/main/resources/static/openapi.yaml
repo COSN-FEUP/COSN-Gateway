@@ -408,12 +408,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/RunWorkflowResponse'
   ################################
-  #Real System service
+  #City service
   ################################
   /getAllCities:
     get:
       tags:
-        - Real System Service
+        - City and Domain Model Service
       summary: Return all cities.
       operationId: getAllCities
       parameters:
@@ -447,11 +447,11 @@ paths:
             '*/*':
               schema:
                 type: object
-  /getSensorByType:
+  /getSensorByType/static:
     get:
       tags:
-        - Real System Service
-      summary: Return sensors value by type and radius.
+        - City and Domain Model Service
+      summary: Return all static sensors by type and radius.
       operationId: getSensorByType
       parameters:
         - name: AuthToken
@@ -499,11 +499,11 @@ paths:
             '*/*':
               schema:
                 type: object
-  /getSensorValues:
+  /getSensorValues/static:
     get:
       tags:
-        - Real System Service
-      summary: Return all sensors value by radius.
+        - City and Domain Model Service
+      summary: Return all static sensors by radius.
       operationId: getSensorValues
       parameters:
         - name: AuthToken
@@ -546,13 +546,102 @@ paths:
             '*/*':
               schema:
                 type: object
+  /getSensorType/mobile:
+    get:
+      tags:
+        - City and Domain Model Service
+      summary: Return mobile sensors of a city by type.
+      operationId: getSensorTypeMobile
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: cityId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /getSensorCity/mobile:
+    get:
+      tags:
+        - City and Domain Model Service
+      summary: Return mobile sensors of a city.
+      operationId: getSensorCityMobile
+      parameters:
+        - name: AuthToken
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: cityId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "226":
+          description: IM Used
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
   ################################
   #Domain Model service
   ################################
   /getAllDomainModels:
     get:
       tags:
-        - Domain Model Service
+        - City and Domain Model Service
       summary: Return all available domain models.
       operationId: getAllDomainModels
       parameters:

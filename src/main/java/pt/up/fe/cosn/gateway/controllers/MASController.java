@@ -48,6 +48,11 @@ public class MASController {
 
     private static String masServiceURL = "https://mascontroller.herokuapp.com";
 
+    private Boolean hasPermission(Optional<User> user, RoleService role){
+        //TODO Add role authentication filter
+        return true;
+    }
+
     @Hidden
     @PostMapping("/executeOrder")
     public ResponseEntity<Object> executeOrder(@RequestHeader("AuthToken") String authorization, @RequestBody OrderRequest request) {
@@ -81,7 +86,7 @@ public class MASController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
+        if(!hasPermission(userOptional, roleService))
             return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
 
         Map<String, String> order = new HashMap<String, String>();

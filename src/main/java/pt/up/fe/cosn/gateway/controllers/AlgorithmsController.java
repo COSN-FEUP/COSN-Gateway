@@ -36,6 +36,11 @@ public class AlgorithmsController {
 
     private static String algorithmServiceURL = "http://algorithmmicroservice.herokuapp.com";
 
+    private Boolean hasPermission(Optional<User> user, RoleService role){
+        return user.get().getRole().getValue().equals(role.getResearcherRole().get().getValue()) ||
+                user.get().getRole().getValue().equals(role.getAdministratorRole().get().getValue());
+    }
+
     @GetMapping("/getAlgorithms")
     @ResponseBody
     public ResponseEntity<Object> getAlgorithms(@RequestHeader("AuthToken") String authorization) {
@@ -48,8 +53,8 @@ public class AlgorithmsController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
-            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+        if(!hasPermission(userOptional, roleService))
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation. Only Admin or Researcher role allowed."));
 
         ResponseEntity<AlgorithmResponse[]> response =
                 restTemplate.getForEntity(
@@ -72,8 +77,8 @@ public class AlgorithmsController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
-            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+        if(!hasPermission(userOptional, roleService))
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation. Only Admin or Researcher role allowed."));
 
         ResponseEntity<AlgorithmResponse[]> response =
                 restTemplate.getForEntity(
@@ -102,8 +107,8 @@ public class AlgorithmsController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
-            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+        if(!hasPermission(userOptional, roleService))
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation. Only Admin or Researcher role allowed."));
 
         ResponseEntity<AlgorithmResponse> response =
                 restTemplate.getForEntity(
@@ -129,8 +134,8 @@ public class AlgorithmsController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
-            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+        if(!hasPermission(userOptional, roleService))
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation. Only Admin or Researcher role allowed."));
 
         ResponseEntity<WorkflowResponse[]> response =
                 restTemplate.getForEntity(

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
-import pt.up.fe.cosn.gateway.advices.responses.algorithmsResponses.AlgorithmResponse;
 import pt.up.fe.cosn.gateway.entities.User;
 import pt.up.fe.cosn.gateway.factories.ResponseFactory;
 import pt.up.fe.cosn.gateway.services.RoleService;
@@ -17,7 +16,6 @@ import pt.up.fe.cosn.gateway.services.UserService;
 import pt.up.fe.cosn.gateway.utils.Utils;
 
 import java.util.Optional;
-import java.util.Random;
 
 @RestController
 public class MonitoringController {
@@ -33,6 +31,10 @@ public class MonitoringController {
 
     private static String monitoringURL = "http://algorithmmicroservice.herokuapp.com";
 
+    private Boolean hasPermission(Optional<User> user, RoleService role){
+        return user.get().getRole().getValue().equals(role.getResearcherRole().get().getValue());
+    }
+
     @GetMapping("/getSystemHealth")
     @ResponseBody
     public ResponseEntity<Object> getSystemHealth(@RequestHeader("AuthToken") String authorization) {
@@ -44,8 +46,34 @@ public class MonitoringController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
-            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+        if(!hasPermission(userOptional, roleService))
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation. Only Admin role allowed."));
+
+        String response =
+                restTemplate.getForObject(
+                        getSystemHealthURL,
+                        String.class);
+
+        /*Object responseObject = response.getBody();
+        //Get response status code
+        int statusCodeValue = response.getStatusCodeValue();*/
+
+        return ResponseFactory.ok(response);
+    }
+
+    @GetMapping("/getAllSystemsLogs")
+    @ResponseBody
+    public ResponseEntity<Object> getAllSystemsLogs(@RequestHeader("AuthToken") String authorization) {
+        String getSystemHealthURL = monitoringURL +"/health";
+
+        Claims claim = Utils.decodeJWT(authorization);
+        Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
+
+        if(userOptional.isEmpty())
+            return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
+
+        if(!hasPermission(userOptional, roleService))
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation. Only Admin role allowed."));
 
         String response =
                 restTemplate.getForObject(

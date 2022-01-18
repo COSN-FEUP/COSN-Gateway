@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
-import pt.up.fe.cosn.gateway.advices.responses.domainModelResponse.DomainModelResponse;
 import pt.up.fe.cosn.gateway.entities.User;
 import pt.up.fe.cosn.gateway.factories.ResponseFactory;
 import pt.up.fe.cosn.gateway.services.RoleService;
@@ -20,7 +19,6 @@ import pt.up.fe.cosn.gateway.services.UserService;
 import pt.up.fe.cosn.gateway.utils.Utils;
 
 import java.util.Optional;
-import java.util.Random;
 
 @RestController
 public class DomainModelController {
@@ -38,6 +36,11 @@ public class DomainModelController {
 
     private String mockDomainModel = "Domain Model";
 
+    private Boolean hasPermission(Optional<User> user, RoleService role){
+        return user.get().getRole().getValue().equals(role.getResearcherRole().get().getValue()) ||
+                user.get().getRole().getValue().equals(role.getAdministratorRole().get().getValue());
+    }
+
     @GetMapping("/getAllDomainModels")
     @ResponseBody
     public ResponseEntity<Object> getAllDomainModels(@RequestHeader("AuthToken") String authorization) {
@@ -49,8 +52,8 @@ public class DomainModelController {
         if(userOptional.isEmpty())
             return ResponseFactory.bad(new SimpleResponse(false, "The token is not valid."));
 
-        if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
-            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
+        if(!hasPermission(userOptional, roleService))
+            return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation. Only Admin or Researcher role allowed."));
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + authorization);
