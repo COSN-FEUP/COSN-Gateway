@@ -33,7 +33,7 @@ public class RealSystemController {
 
     @GetMapping("/getSensorsValues")
     @ResponseBody
-    public ResponseEntity<Object> getAllValues(@RequestHeader("AuthToken") String authorization, @RequestParam("sensorsIds") String[] sensorsIds,
+    public ResponseEntity<Object> getAllValues(@RequestHeader("AuthToken") String authorization, @RequestParam("sensorsIds") String sensorsIds,
                                                   @RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime) {
         String getSystemHealthURL = monitoringURL +"/health";
 
