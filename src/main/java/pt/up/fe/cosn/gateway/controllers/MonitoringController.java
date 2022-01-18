@@ -2,24 +2,25 @@ package pt.up.fe.cosn.gateway.controllers;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pt.up.fe.cosn.gateway.advices.responses.SimpleResponse;
+import pt.up.fe.cosn.gateway.advices.responses.algorithmsResponses.AlgorithmResponse;
 import pt.up.fe.cosn.gateway.entities.User;
 import pt.up.fe.cosn.gateway.factories.ResponseFactory;
-import pt.up.fe.cosn.gateway.requests.VisualizationRequest;
 import pt.up.fe.cosn.gateway.services.RoleService;
 import pt.up.fe.cosn.gateway.services.UserService;
 import pt.up.fe.cosn.gateway.utils.Utils;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 @RestController
-public class VisualizationController {
+public class MonitoringController {
 
     @Autowired
     private RoleService roleService;
@@ -30,8 +31,13 @@ public class VisualizationController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @PostMapping("/runVisualization")
-    public ResponseEntity<Object> runVisualization(@RequestHeader("AuthToken") String authorization, @RequestBody VisualizationRequest request) throws IOException {
+    private static String monitoringURL = "http://algorithmmicroservice.herokuapp.com";
+
+    @GetMapping("/getSystemHealth")
+    @ResponseBody
+    public ResponseEntity<Object> getSystemHealth(@RequestHeader("AuthToken") String authorization) {
+        String getSystemHealthURL = monitoringURL +"/health";
+
         Claims claim = Utils.decodeJWT(authorization);
         Optional<User> userOptional = userService.getUserByEmail(claim.getSubject());
 
@@ -41,13 +47,15 @@ public class VisualizationController {
         if(userOptional.get().getRole().getValue() > roleService.getAdministratorRole().get().getValue())
             return ResponseFactory.unauthorized(new SimpleResponse(false, "User is not authorized to do this operation."));
 
-        String URI_VISUALIZATION = "https://61d8d203e6744d0017ba8cc5.mockapi.io/Visualization/{id}";
+        String response =
+                restTemplate.getForObject(
+                        getSystemHealthURL,
+                        String.class);
 
-        Map<String, Integer> params = new HashMap<String, Integer>();
-        params.put("id", request.getId());
+        /*Object responseObject = response.getBody();
+        //Get response status code
+        int statusCodeValue = response.getStatusCodeValue();*/
 
-        String result = restTemplate.getForObject(URI_VISUALIZATION, String.class, params);
-
-        return ResponseFactory.ok(result);
+        return ResponseFactory.ok(response);
     }
 }
