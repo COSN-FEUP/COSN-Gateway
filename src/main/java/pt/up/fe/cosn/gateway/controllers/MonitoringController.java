@@ -32,7 +32,8 @@ public class MonitoringController {
     private static String monitoringURL = "http://algorithmmicroservice.herokuapp.com";
 
     private Boolean hasPermission(Optional<User> user, RoleService role){
-        return user.get().getRole().getValue().equals(role.getResearcherRole().get().getValue());
+        return user.get().getRole().getValue().equals(role.getResearcherRole().get().getValue()) ||
+                user.get().getRole().getValue().equals(role.getAdministratorRole().get().getValue());
     }
 
     @GetMapping("/getSystemHealth")
